@@ -18,8 +18,8 @@
 				</Compiler>
 				<Linker>
 					<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image" />
-					<Add directory="obj/sdl/sdl2/lib" />
-					<Add directory="obj/sdl/sdl2_image/lib" />
+					<Add directory="obj/sdl2/bin" />
+					<Add directory="obj/sdl2_image/bin" />
 				</Linker>
 			</Target>
 			<Target title="Release">
