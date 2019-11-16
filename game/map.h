@@ -16,9 +16,8 @@ void render_map(){
     int i, j;
     for(i = 0; i < MAP_SIZE; i++){
         for(j = 0; j < MAP_SIZE; j++){
-            printf("%i ", gameMap[i][j].attributes[0]->id);
+
         }
-        printf("\n");
     }
 
 }

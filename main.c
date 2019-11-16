@@ -9,14 +9,15 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-#include "sdl/coordinate.h"
+#include "game/util/list.h"
+#include "sdl/imgcoordinate.h"
 
 //Janela e renderizador de janela.
 SDL_Window* gameWindow = NULL;
 SDL_Renderer* gameRenderer = NULL;
 
-#include "sdl/texture.h"
 #include "sdl/starter.h"
+#include "sdl/texture.h"
 
 //Textura de fundo.
 Texture* background;
@@ -36,7 +37,15 @@ Texture* test;
 bool quit = false;
 
 int main(int argc, char *argv[]){
-    if(init_graphics("Mundo de Wumpus", gameWindow, gameRenderer)){
+    if(init_graphics("Mundo de Wumpus", &gameWindow, &gameRenderer)){
+
+        clear_graphics();
+
+        Texture tex = load_texture("res/player_b.png");
+
+        render_texture(&tex, (Transform){{SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 0, 5.0, false}, PIVOT_MID_CENTER, 1.0F);
+
+        render_graphics();
 
         begin_game();
 
@@ -54,7 +63,7 @@ int main(int argc, char *argv[]){
             }
         }
         //Fecha os gráficos quando o laço acaba.
-        close_graphics(gameWindow, gameRenderer);
+        close_graphics();
     }
     return 0;
 }

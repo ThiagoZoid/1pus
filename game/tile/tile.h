@@ -4,7 +4,7 @@
 //No jogo do Wumpus, é usado para definir
 //características como "buraco".
 typedef struct tileType{
-    int id;
+    char texture[32];
 } TileType;
 
 //Atributo de um Tile.

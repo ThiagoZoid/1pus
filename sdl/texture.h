@@ -13,7 +13,6 @@ typedef enum pivot{
 
 //Estrutura de uma textura.
 typedef struct texture{
-    bool            isValid;
     SDL_Texture*    image;
     int             width;
     int             height;
@@ -30,17 +29,15 @@ void clear_texture(Texture *texture){
 //Cria uma textura em branco.
 Texture empty_texture(){
     Texture t;
-    t.isValid = false;
     t.image = NULL;
     t.width = 0;
     t.height = 0;
     return t;
 }
 
-//Carrega uma textura do arquivo.
-bool load_texture(char path[], Texture *texture){
-    //Limpa a textura.
-    clear_texture(texture);
+//Carrega uma imagem do arquivo e põe em uma textura.
+Texture load_texture(char *path){
+    Texture texture = empty_texture();
     //Imagem final.
 	SDL_Texture* newImage = NULL;
     //Carrega a imagem para uma superfície.
@@ -49,21 +46,17 @@ bool load_texture(char path[], Texture *texture){
 	{
 		printf("%s", SDL_GetError());
 	}else{
-        newImage = SDL_CreateTextureFromSurface(gameRenderer, loadedSurface);
+        newImage = SDL_CreateTextureFromSurface(*rendererRef, loadedSurface);
         if(newImage == NULL){
             printf("%s", SDL_GetError());
         }else{
-            texture->height = loadedSurface->h;
-            texture->width = loadedSurface->w;
+            texture.height = loadedSurface->h;
+            texture.width = loadedSurface->w;
         }
         SDL_FreeSurface(loadedSurface);
 	}
-	texture->image = newImage;
-	if(texture->image != NULL){
-        texture->isValid = true;
-        return true;
-	}
-	return false;
+	texture.image = newImage;
+	return texture.image ? texture : empty_texture();
 }
 
 //Renderiza uma textura.
@@ -106,5 +99,5 @@ void render_texture(Texture* texture, Transform transf, Pivot pos, float fractio
     //Gera um retângulo para renderizar a textura.
     SDL_Rect renderRect = {transf.position.x, transf.position.y, finalWidth * fraction, finalHeight};
     //Manda a textura para o renderizador.
-    SDL_RenderCopyEx(gameRenderer, texture->image, NULL, &renderRect, 0, NULL, transf.orientation);
+    SDL_RenderCopyEx(*rendererRef, texture->image, NULL, &renderRect, 0, NULL, transf.orientation);
 }

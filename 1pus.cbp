@@ -18,8 +18,8 @@
 				</Compiler>
 				<Linker>
 					<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image" />
-					<Add directory="obj/sdl2/bin" />
-					<Add directory="obj/sdl2_image/bin" />
+					<Add directory="obj/sdl2/lib" />
+					<Add directory="obj/sdl2_image/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -43,11 +43,12 @@
 		<Unit filename="game/map.h" />
 		<Unit filename="game/tile/tile.h" />
 		<Unit filename="game/util/coordinate.h" />
+		<Unit filename="game/util/list.h" />
 		<Unit filename="game/util/util.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="sdl/coordinate.h" />
+		<Unit filename="sdl/imgcoordinate.h" />
 		<Unit filename="sdl/starter.h" />
 		<Unit filename="sdl/texture.h" />
 		<Extensions>

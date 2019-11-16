@@ -1,6 +1,12 @@
+SDL_Window **windowRef;
+SDL_Renderer **rendererRef;
+
 //Inicializa a engine gráfica.
-bool init_graphics(char title[], SDL_Window* window, SDL_Renderer* renderer){
+bool init_graphics(char title[], SDL_Window **window, SDL_Renderer **renderer){
      bool success = true;
+
+     windowRef = window;
+     rendererRef = renderer;
 
      //Determina a qualidade de redimensionamento de imagens.
      //"0" -> equivale à técnica de redimensionamento "Nearest neighbour",
@@ -13,18 +19,18 @@ bool init_graphics(char title[], SDL_Window* window, SDL_Renderer* renderer){
         success = false;
      }else{
          //Cria a janela
-         window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-         if(window == NULL) {
+         *windowRef = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+         if(*windowRef == NULL) {
                 printf("%s", SDL_GetError());
                 success = false;
          }else{
              //Cria um renderizador
-             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-             if(renderer == NULL){
+             *rendererRef = SDL_CreateRenderer(*windowRef, -1, SDL_RENDERER_ACCELERATED);
+             if(*rendererRef == NULL){
                 printf("%s", SDL_GetError());
              }else{
 				//Inicializa a cor de fundo do Renderizador
-				SDL_SetRenderDrawColor(renderer, 0x3d, 0x3d, 0x3d, 0x00);
+				SDL_SetRenderDrawColor(*rendererRef, 0x3d, 0x3d, 0x3d, 0x00);
 
                 int imgFlags;
 				//Inicializa o carregamento do formato PNG
@@ -45,17 +51,31 @@ bool init_graphics(char title[], SDL_Window* window, SDL_Renderer* renderer){
     return success;
 }
 
+//Limpa os gráficos.
+void clear_graphics(){
+    // Limpa a Tela
+    SDL_RenderClear(*rendererRef);
+}
+
+//Renderiza os gráficos.
+void render_graphics(){
+    // Atualiza a Tela
+    SDL_RenderPresent(*rendererRef);
+    // Atualiza a Imagem
+    SDL_UpdateWindowSurface(*windowRef);
+}
+
 //Desaloca os gráficos.
-void close_graphics(SDL_Window* window, SDL_Renderer* renderer){
+void close_graphics(){
 	//Finaliza as texturas.
 
 	//Finaliza o Renderizador.
-	SDL_DestroyRenderer(renderer);
-	renderer = NULL;
+	SDL_DestroyRenderer(*rendererRef);
+	free(*rendererRef);
 
 	//Finaliza a Janela.
-	SDL_DestroyWindow(window);
-	window = NULL;
+	SDL_DestroyWindow(*windowRef);
+	free(*windowRef);
 
 	//Sai dos subsistemas do SDL.
 	IMG_Quit();

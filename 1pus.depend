@@ -393,16 +393,17 @@
 
 1573586789 c:\users\thiag\Área de trabalho\projetos\1pus\sdl\starter.h
 
-1573586825 source:c:\users\thiag\onedrive\documentos\github\1pus\main.c
+1573889680 source:c:\users\thiag\onedrive\documentos\github\1pus\main.c
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<time.h>
-	"sdl/coordinate.h"
-	"sdl/texture.h"
+	"game/util/list.h"
+	"sdl/imgcoordinate.h"
 	"sdl/starter.h"
+	"sdl/texture.h"
 	"game/util/util.h"
 	"game/util/coordinate.h"
 	"game/tile/tile.h"
@@ -760,19 +761,23 @@
 
 1573584233 c:\users\thiag\onedrive\documentos\github\1pus\sdl\coordinate.h
 
-1573586665 c:\users\thiag\onedrive\documentos\github\1pus\sdl\texture.h
+1573889559 c:\users\thiag\onedrive\documentos\github\1pus\sdl\texture.h
 
-1573586789 c:\users\thiag\onedrive\documentos\github\1pus\sdl\starter.h
+1573883325 c:\users\thiag\onedrive\documentos\github\1pus\sdl\starter.h
 
 1573409693 c:\users\thiag\onedrive\documentos\github\1pus\game\util\util.h
 
-1573586847 c:\users\thiag\onedrive\documentos\github\1pus\game\util\coordinate.h
+1573890549 c:\users\thiag\onedrive\documentos\github\1pus\game\util\coordinate.h
 
-1573375718 c:\users\thiag\onedrive\documentos\github\1pus\game\tile\tile.h
+1573889622 c:\users\thiag\onedrive\documentos\github\1pus\game\tile\tile.h
 
 1573409510 c:\users\thiag\onedrive\documentos\github\1pus\game\entity\actor.h
 
-1573375296 c:\users\thiag\onedrive\documentos\github\1pus\game\map.h
+1573883548 c:\users\thiag\onedrive\documentos\github\1pus\game\map.h
 
-1573586681 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
+1573890795 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
+
+1573584233 c:\users\thiag\onedrive\documentos\github\1pus\sdl\imgcoordinate.h
+
+1573889913 c:\users\thiag\onedrive\documentos\github\1pus\game\util\list.h
 

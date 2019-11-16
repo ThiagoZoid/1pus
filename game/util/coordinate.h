@@ -3,12 +3,6 @@ typedef struct coordinate {
     int x, y;
 } Coordinate;
 
-//Estrutura de uma lista de coordenadas.
-typedef struct coordinateList {
-    Coordinate *values;
-    int listSize;
-} CoordinateList;
-
 //Compara duas coordenadas.
 bool compare_coordinates(Coordinate first, Coordinate second){
     return first.x == second.x && first.y == second.y;
@@ -37,84 +31,18 @@ void print_coordinate(Coordinate coordinate){
 }
 
 //Exibe uma lista de coordenadas.
-void print_coordinates(CoordinateList coordinateList){
+void print_coordinates(List coordinateList){
     int i;
     for(i = 0; i < coordinateList.listSize; i++){
-        print_coordinate(*(coordinateList.values + i));
+        print_coordinate(*(Coordinate*)get_item_at(coordinateList, i));
     }
 }
 
-//Cria uma lista de coordenadas e a inicializa como vazia.
-CoordinateList empty_list(){
-    CoordinateList newList;
-    newList.values = NULL;
-    newList.listSize = 0;
-    return newList;
-}
-
-//Checa se uma lista de coordenadas esta vazia.
-bool is_list_empty(CoordinateList coordinateList){
-    return coordinateList.listSize <= 0;
-}
-
-//Obtém uma coordenada em um índice de uma lista.
-Coordinate* get_coordinate_at(CoordinateList *coordinateList, int index){
-    if(!coordinateList) return false;
-
-    return !is_list_empty(*coordinateList) ? (Coordinate*)(coordinateList->values + index) : NULL;
-}
-
-//Checa se uma lista possúi uma coordenada.
-bool contains_coordinate(CoordinateList coordinateList, Coordinate coordinate){
-    int i;
-    bool contains = false;
-    for(i = 0; i < coordinateList.listSize; i++){
-        if(!contains){
-            Coordinate currentCoordinate = *get_coordinate_at(&coordinateList, i);
-            contains = compare_coordinates(currentCoordinate, coordinate);
-        } else break;
-    }
-    return contains;
-}
-
-//Remove uma coordenada de um índice em uma lista.
-bool remove_coordinate_at(CoordinateList *coordinateList, int index){
-    if(!coordinateList) return false;
-
-    if(is_list_empty(*coordinateList) || index >= coordinateList->listSize) return false;
-    int i, j;
-    for(i = 0, j = 0; i < coordinateList->listSize; i++){
-        if(i != j) *(coordinateList->values + j) = *(coordinateList->values + i);
-        if(i != index) j++;
-    }
-    coordinateList->listSize--;
-    free(coordinateList + j);
-    return true;
-}
-
-//Adiciona uma coordenada a uma lista.
-bool add_coordinate(CoordinateList *coordinateList, Coordinate coordinate){
-    if(!coordinateList) return false;
-
-    if(is_list_empty(*coordinateList)){
-        coordinateList->listSize = 0;
-        free(coordinateList->values);
-    }
-    Coordinate *newValues = (Coordinate*)malloc((coordinateList->listSize + 1) * sizeof(Coordinate));
-    int i;
-    for(i = 0; i < coordinateList->listSize; i++){
-        *(newValues + i) = *(coordinateList->values + i);
-    }
-    *(newValues + i) = coordinate;
-    coordinateList->listSize++;
-    coordinateList->values = newValues;
-    return true;
-}
-
+/*
 //Junta a segunda lista de coordenadas na primeira.
 bool append_lists(CoordinateList *firstList, CoordinateList secondList){
     if(!firstList) return false;
-    if(is_list_empty(secondList)) return true;
+    if(is_coordinate_list_empty(secondList)) return true;
 
     Coordinate *newValues = malloc((firstList->listSize + secondList.listSize) * sizeof(Coordinate));
     int i, j;
@@ -129,6 +57,7 @@ bool append_lists(CoordinateList *firstList, CoordinateList secondList){
     firstList->listSize = i + j;
     return true;
 }
+*/
 
 //Cria uma coordenada.
 Coordinate to_coordinate(int x, int y){
@@ -136,9 +65,9 @@ Coordinate to_coordinate(int x, int y){
 }
 
 //Cria uma lista de coordenadas a partir de 1 coordenada.
-CoordinateList to_list(Coordinate coordinate){
-    CoordinateList newList = empty_list();
-    add_coordinate(&newList, coordinate);
+List to_list(Coordinate coordinate){
+    List newList = empty_list();
+    add_item(&newList, &coordinate);
     return newList;
 }
 
@@ -148,17 +77,18 @@ Coordinate random_coordinate(){
 }
 
 //Cria uma lista de coordenadas aleatórias.
-CoordinateList random_coordinates(int number){
-    CoordinateList newList = empty_list();
+List random_coordinates(int number){
+    List newList = empty_list();
     int i;
     for(i = 0; i < number; i++){
-        add_coordinate(&newList, random_coordinate());
+        Coordinate r = random_coordinate();
+        add_item(&newList, &r);
     }
     return newList;
 }
 
 //Cria uma coordenada aleatória recebendo uma lista de exclusão.
-Coordinate random_exclusive_coordinate(CoordinateList exclusionList){
+Coordinate random_exclusive_coordinate(List exclusionList){
     Coordinate result;
     bool uniqueCoordinate;
     do{
@@ -167,7 +97,7 @@ Coordinate random_exclusive_coordinate(CoordinateList exclusionList){
         int i;
         for(i = 0; i < exclusionList.listSize; i++){
             if(uniqueCoordinate){
-                uniqueCoordinate = !compare_coordinates(result, *get_coordinate_at(&exclusionList, i));
+                uniqueCoordinate = !compare_coordinates(result, *((Coordinate*)get_item_at(exclusionList, i)));
             } else break;
         }
     }while(uniqueCoordinate == false);
@@ -175,21 +105,23 @@ Coordinate random_exclusive_coordinate(CoordinateList exclusionList){
 }
 
 //Cria uma lista de coordenadas aleatórias, recebendo uma lista de exclusão.
-CoordinateList random_exclusive_coordinates(CoordinateList exclusionList, int number){
-    CoordinateList newList = empty_list();
+List random_exclusive_coordinates(List exclusionList, int number){
+    List newList = empty_list();
     int i;
     for(i = 0; i < number; i++){
-        add_coordinate(&newList, random_exclusive_coordinate(exclusionList));
+        Coordinate r = random_exclusive_coordinate(exclusionList);
+        add_item(&newList, &r);
     }
     return newList;
 }
 
 //Cria uma lista de coordenadas aleatórias, sem repetição, recebendo uma lista de exclusão.
-CoordinateList random_unique_coordinates(CoordinateList exclusionList, int number){
-    CoordinateList newList = exclusionList;
+List random_unique_coordinates(List exclusionList, int number){
+    List newList = exclusionList;
     int i;
     for(i = 0; i < number; i++){
-        add_coordinate(&newList, random_exclusive_coordinate(newList));
+        Coordinate r = random_exclusive_coordinate(newList);
+        add_item(&newList, &r);
     }
     return newList;
 }
