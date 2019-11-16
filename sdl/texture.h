@@ -11,9 +11,16 @@ typedef enum pivot{
     PIVOT_BOT_RIGHT
 } Pivot;
 
+//Estrutura dos dados de uma textura.
+typedef struct textureData{
+    char            *path;
+    int             frames;
+} TextureData;
+
 //Estrutura de uma textura.
 typedef struct texture{
-    SDL_Texture*    image;
+    SDL_Texture     *image;
+    TextureData     data;
     int             width;
     int             height;
 } Texture;
@@ -26,18 +33,29 @@ void clear_texture(Texture *texture){
     }
 }
 
+//Cria dados de textura em branco.
+TextureData empty_texture_data(){
+    TextureData d;
+    d.frames = 1;
+    d.path = NULL;
+    return d;
+}
+
 //Cria uma textura em branco.
 Texture empty_texture(){
     Texture t;
     t.image = NULL;
+    t.data = empty_texture_data();
     t.width = 0;
     t.height = 0;
     return t;
 }
 
-//Carrega uma imagem do arquivo e põe em uma textura.
-Texture load_texture(char *path){
+//Carrega uma imagem do arquivo e põe em uma textura animada.
+Texture load_frames(char *path, int frames){
     Texture texture = empty_texture();
+    texture.data.path = path;
+    texture.data.frames = 1;
     //Imagem final.
 	SDL_Texture* newImage = NULL;
     //Carrega a imagem para uma superfície.
@@ -57,6 +75,11 @@ Texture load_texture(char *path){
 	}
 	texture.image = newImage;
 	return texture.image ? texture : empty_texture();
+}
+
+//Carrega uma imagem do arquivo e põe em uma textura estática.
+Texture load_frame(char *path){
+    return load_frames(path, 1);
 }
 
 //Renderiza uma textura.

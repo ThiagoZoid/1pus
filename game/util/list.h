@@ -1,4 +1,3 @@
-
 //Estrutura de uma lista.
 typedef struct itemList {
     void **values;
@@ -18,7 +17,7 @@ bool is_list_empty(List itemList){
     return itemList.listSize <= 0;
 }
 
-//Obtém um item (referência) em um índice de uma lista.
+//Obtém um item em um índice de uma lista.
 void *get_item_at(List itemList, int index){
 
     return !is_list_empty(itemList) &&
@@ -26,7 +25,7 @@ void *get_item_at(List itemList, int index){
 }
 
 //Checa se uma lista possúi uma item.
-bool contains_item(List itemList, void *item, bool (*compare_function)(void*, void*)){
+bool contains_item(List itemList, void *item, bool (*compare_function)()){
     int i;
     bool contains = false;
     for(i = 0; i < itemList.listSize; i++){
@@ -69,5 +68,31 @@ bool remove_item_at(List *itemList, int index){
     }
     itemList->listSize--;
     free(itemList + j);
+    return true;
+}
+
+//Junta uma segunda lista a uma primeira.
+bool append_lists(List *firstList, List secondList){
+    if(is_list_empty(secondList)) return true;
+
+    if(is_list_empty(*firstList)){
+        firstList->listSize = 0;
+        free(firstList->values);
+    }
+    int finalSize = firstList->listSize + secondList.listSize;
+    void **newValues = (void**)malloc((finalSize) * sizeof(void*));
+
+    int i;
+    for(i = 0; i < finalSize; i++){
+        if(i < firstList->listSize){
+            *(newValues + i) = *(firstList->values + i);
+        } else {
+            *(newValues + i) = *(secondList.values + (i - firstList->listSize));
+        }
+    }
+
+    free(firstList->values);
+    firstList->values = newValues;
+    firstList->listSize = finalSize;
     return true;
 }

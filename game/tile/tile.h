@@ -1,24 +1,14 @@
 #define MAX_TILE_ATTRIBUTES 10
 
 //Estrutura do tipo do tile.
-//No jogo do Wumpus, é usado para definir
-//características como "buraco".
 typedef struct tileType{
-    char texture[32];
+    TextureData textureData;
 } TileType;
-
-//Atributo de um Tile.
-//No jogo do Wumpus, é usado para definir
-//características como o fedor ou a brisa.
-typedef struct tileAttribute{
-    int id;
-} TileAttribute;
-
 
 //Estrutura de um tile.
 typedef struct tile{
     TileType *type;
-    TileAttribute* attributes[MAX_TILE_ATTRIBUTES];
+    void *attributes[MAX_TILE_ATTRIBUTES];
 } Tile;
 
 //Define um tipo de um tile.
@@ -29,7 +19,7 @@ bool tile_set_type(Tile *tile, TileType *type){
 }
 
 //Adiciona um atributo a um tile.
-bool tile_add_attribute(Tile *tile, TileAttribute *attribute){
+bool tile_add_attribute(Tile *tile, void *attribute){
     int i;
     bool foundSpace = false;
 

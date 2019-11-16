@@ -8,18 +8,29 @@ bool compare_coordinates(Coordinate first, Coordinate second){
     return first.x == second.x && first.y == second.y;
 }
 
-//Retorna verdadeiro se as coordenadas forem adjacentes (lados e diagonal);
+//Compara dois ponteiros de coordenadas.
+//Usada apenas para encontrar coordenadas em listas (que trabalham apenas com ponteiros).
+static bool compare_coordinate_pointers(Coordinate *first, Coordinate *second){
+    return first->x == second->x && first->y == second->y;
+}
+
+//Função da Lista customizada para coordenadas (para evitar tratativas de ponteiro).
+bool contains_coordinate(List itemList, Coordinate coordinate){
+    contains_item(itemList, &coordinate, compare_coordinate_pointers);
+}
+
+//Retorna verdadeiro se as coordenadas forem adjacentes (lados e diagonal).
 bool adjacent_coordinate(Coordinate first, Coordinate second){
     return (absolute(first.x - second.x) == 1 && absolute(first.y - second.y) <= 1)
     || (absolute(first.y - second.y) == 1 && absolute(first.x - second.x) <= 0);
 }
 
-//Retorna verdadeiro se as coordenadas forem adjacentes diagonalmente (formando um X);
+//Retorna verdadeiro se as coordenadas forem adjacentes diagonalmente (formando um X).
 bool adjacent_coordinate_x(Coordinate first, Coordinate second){
     return absolute(first.x - second.x) == 1 && absolute(first.y - second.y) == 1;
 }
 
-//Retorna verdadeiro se as coordenadas forem adjacentes paralelamente (formando um +);
+//Retorna verdadeiro se as coordenadas forem adjacentes paralelamente (formando um +).
 bool adjacent_coordinate_cross(Coordinate first, Coordinate second){
     return (absolute(first.x - second.x) == 1 && first.y - second.y == 0)
     || (absolute(first.y - second.y) == 1 && first.x - second.x == 0);
@@ -38,30 +49,16 @@ void print_coordinates(List coordinateList){
     }
 }
 
-/*
-//Junta a segunda lista de coordenadas na primeira.
-bool append_lists(CoordinateList *firstList, CoordinateList secondList){
-    if(!firstList) return false;
-    if(is_coordinate_list_empty(secondList)) return true;
-
-    Coordinate *newValues = malloc((firstList->listSize + secondList.listSize) * sizeof(Coordinate));
-    int i, j;
-    for(i = 0; i < firstList->listSize; i++){
-        *(newValues + i) = *(firstList->values + i);
-    }
-    for(j = 0; j < secondList.listSize; j++){
-        *(newValues + j + i) = *(secondList.values + j);
-    }
-    free(firstList->values);
-    firstList->values = newValues;
-    firstList->listSize = i + j;
-    return true;
-}
-*/
-
 //Cria uma coordenada.
 Coordinate to_coordinate(int x, int y){
     return (Coordinate){ x, y };
+}
+
+//Aloca uma coordenada na memória e a inicializa.
+Coordinate *allocate_coordinate(Coordinate coordinate){
+    Coordinate *newCoordinate = (Coordinate*)malloc(sizeof(Coordinate));
+    *newCoordinate = coordinate;
+    return newCoordinate;
 }
 
 //Cria uma lista de coordenadas a partir de 1 coordenada.
@@ -81,8 +78,8 @@ List random_coordinates(int number){
     List newList = empty_list();
     int i;
     for(i = 0; i < number; i++){
-        Coordinate r = random_coordinate();
-        add_item(&newList, &r);
+        Coordinate *r = allocate_coordinate(random_coordinate());
+        add_item(&newList, r);
     }
     return newList;
 }
@@ -109,19 +106,21 @@ List random_exclusive_coordinates(List exclusionList, int number){
     List newList = empty_list();
     int i;
     for(i = 0; i < number; i++){
-        Coordinate r = random_exclusive_coordinate(exclusionList);
-        add_item(&newList, &r);
+        Coordinate *r = allocate_coordinate(random_exclusive_coordinate(exclusionList));
+        add_item(&newList, r);
     }
     return newList;
 }
 
 //Cria uma lista de coordenadas aleatórias, sem repetição, recebendo uma lista de exclusão.
 List random_unique_coordinates(List exclusionList, int number){
-    List newList = exclusionList;
+    List auxList = exclusionList;
+    List newList = empty_list();
     int i;
     for(i = 0; i < number; i++){
-        Coordinate r = random_exclusive_coordinate(newList);
-        add_item(&newList, &r);
+        Coordinate *r = allocate_coordinate(random_exclusive_coordinate(auxList));
+        add_item(&newList, r);
+        add_item(&auxList, r);
     }
     return newList;
 }

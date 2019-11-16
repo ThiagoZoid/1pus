@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
 
         clear_graphics();
 
-        Texture tex = load_texture("res/player_b.png");
+        Texture tex = load_frame("res/player_b.png");
 
         render_texture(&tex, (Transform){{SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 0, 5.0, false}, PIVOT_MID_CENTER, 1.0F);
 
