@@ -1,3 +1,4 @@
+//Janela e renderizador do jogo.
 SDL_Window **windowRef;
 SDL_Renderer **rendererRef;
 
@@ -7,6 +8,9 @@ bool init_graphics(char title[], SDL_Window **window, SDL_Renderer **renderer){
 
      windowRef = window;
      rendererRef = renderer;
+
+     //Inicializa o cache.
+     textureCache = empty_list();
 
      //Determina a qualidade de redimensionamento de imagens.
      //"0" -> equivale à técnica de redimensionamento "Nearest neighbour",

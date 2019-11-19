@@ -33,6 +33,11 @@ void clear_texture(Texture *texture){
     }
 }
 
+//Compara duas texturas.
+bool compare_textures(Texture *first, Texture *second){
+    return *first->data.path == *second->data.path;
+}
+
 //Cria dados de textura em branco.
 TextureData empty_texture_data(){
     TextureData d;
@@ -52,16 +57,15 @@ Texture empty_texture(){
 }
 
 //Carrega uma imagem do arquivo e põe em uma textura animada.
-Texture load_frames(char *path, int frames){
+Texture load_texture(TextureData data){
     Texture texture = empty_texture();
-    texture.data.path = path;
-    texture.data.frames = 1;
+    texture.data = data;
+
     //Imagem final.
 	SDL_Texture* newImage = NULL;
     //Carrega a imagem para uma superfície.
-    SDL_Surface* loadedSurface = IMG_Load(path);
-    if( loadedSurface == NULL )
-	{
+    SDL_Surface* loadedSurface = IMG_Load(data.path);
+    if( loadedSurface == NULL ){
 		printf("%s", SDL_GetError());
 	}else{
         newImage = SDL_CreateTextureFromSurface(*rendererRef, loadedSurface);
@@ -75,11 +79,6 @@ Texture load_frames(char *path, int frames){
 	}
 	texture.image = newImage;
 	return texture.image ? texture : empty_texture();
-}
-
-//Carrega uma imagem do arquivo e põe em uma textura estática.
-Texture load_frame(char *path){
-    return load_frames(path, 1);
 }
 
 //Renderiza uma textura.

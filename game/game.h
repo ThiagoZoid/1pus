@@ -28,7 +28,7 @@ List importantPositions;    //Lista onde as coordenadas importantes
 void generate_tile(Tile *t, Coordinate position){
 
     //Checa se não há nada importante no tile (Wumpus, player, etc...)
-    if(!contains_coordinate(importantPositions, position)){
+    if(index_of_coordinate(importantPositions, position) < 0){
         if(adjacent_coordinate_cross(position, wumpus->position)){
 
         }
@@ -67,7 +67,7 @@ void render_map_test(){
     for(i = 0; i < MAP_SIZE; i++){
         for(j = 0; j < MAP_SIZE; j++){
             char a;
-            if(contains_coordinate(importantPositions, to_coordinate(j, i))){
+            if(index_of_coordinate(importantPositions, to_coordinate(j, i)) < 0){
                 if(compare_coordinates(player->position, to_coordinate(j, i))){
                     a = 'P';
                 } else if(compare_coordinates(wumpus->position, to_coordinate(j, i))){
@@ -87,9 +87,10 @@ void render_map_test(){
 
 //Função que é executada ao iniciar o jogo.
 void begin_game(){
+    initialize_actors();
     calculate_level();
     generate_map(&generate_tile);
-    render_map_test();
-    render_map();
+    //render_map_test();
+    render_map(to_coordinate(16, 16));
     print_coordinates(importantPositions);
 }

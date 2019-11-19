@@ -9,13 +9,14 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-#include "game/util/list.h"
+#include "engine/util/list.h"
 #include "sdl/imgcoordinate.h"
 
 //Janela e renderizador de janela.
 SDL_Window* gameWindow = NULL;
 SDL_Renderer* gameRenderer = NULL;
 
+#include "sdl/cache.h"
 #include "sdl/starter.h"
 #include "sdl/texture.h"
 
@@ -26,11 +27,11 @@ Texture* test;
 //Tamanho do mapa.
 #define MAP_SIZE 5
 
-#include "game/util/util.h"
-#include "game/util/coordinate.h"
-#include "game/tile/tile.h"
-#include "game/entity/actor.h"
-#include "game/map.h"
+#include "engine/util/util.h"
+#include "engine/util/coordinate.h"
+#include "engine/tile/tile.h"
+#include "engine/entity/actor.h"
+#include "engine/map/map.h"
 #include "game/game.h"
 
 //Se o usuário deseja sair do jogo.
@@ -41,7 +42,7 @@ int main(int argc, char *argv[]){
 
         clear_graphics();
 
-        Texture tex = load_frame("res/player_b.png");
+        Texture tex = load_texture((TextureData){"res/player_b.png", 1});
 
         render_texture(&tex, (Transform){{SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 0, 5.0, false}, PIVOT_MID_CENTER, 1.0F);
 

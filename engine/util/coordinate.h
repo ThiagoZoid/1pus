@@ -15,8 +15,8 @@ static bool compare_coordinate_pointers(Coordinate *first, Coordinate *second){
 }
 
 //Função da Lista customizada para coordenadas (para evitar tratativas de ponteiro).
-bool contains_coordinate(List itemList, Coordinate coordinate){
-    contains_item(itemList, &coordinate, compare_coordinate_pointers);
+int index_of_coordinate(List itemList, Coordinate coordinate){
+    index_of(itemList, &coordinate, compare_coordinate_pointers);
 }
 
 //Retorna verdadeiro se as coordenadas forem adjacentes (lados e diagonal).
