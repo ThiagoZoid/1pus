@@ -12,11 +12,14 @@ typedef struct actor Actor;
 
 //Estrutura de uma entidade.
 typedef struct entity{
+    int id;
     bool controllable;
+    bool blockable;
     TextureData spriteData;
     void (*spawn_event)(Actor*);
     void (*destroy_event)(Actor*);
     void (*move_event)(Actor*);
+    void (*collide_event)(Actor*, Actor*);
     void (*input_event)(Actor*, SDL_Keycode);
 } Entity;
 
@@ -52,13 +55,53 @@ Actor *spawn_actor(Entity entity, Coordinate position, void *vars){
     return actor;
 }
 
-//Move um ator.
-void move_actor(Actor *actor, Coordinate position){
-    if(!actor || position.x < 0 || position.y < 0 || position.x >= MAP_SIZE || position.y >= MAP_SIZE) return;
+//Obtém todos os atores em um tile.
+List get_all_actors_at(Coordinate position){
+    List actorsList = empty_list();
+    int i;
+    for(i = 0; i < actors.listSize; i++){
+        Actor *currentActor = (Actor*)get_item_at(actors, i);
+        if(compare_coordinates(position, currentActor->position)){
+            add_item(&actorsList, currentActor);
+        }
+    }
+    return actorsList;
+}
 
-    actor->position = position;
-    if(actor->entity.move_event){
-        actor->entity.move_event(actor);
+//Move um ator.
+bool move_actor(Actor *actor, Coordinate position){
+    if(!actor || position.x < 0 || position.y < 0 || position.x >= MAP_SIZE || position.y >= MAP_SIZE)
+        return false;
+
+    //Verifica se algum dos atores no tile alvo é bloqueável.
+    List collidingActors = get_all_actors_at(position);
+    int i;
+    bool canMove = true;
+    for(i = 0; i < collidingActors.listSize; i++){
+        if(((Actor*)get_item_at(collidingActors, i))->entity.blockable){
+            canMove = false;
+            break;
+        }
+    }
+
+    if(canMove){
+        //Ativa os eventos de colisão.
+        for(i = 0; i < collidingActors.listSize; i++){
+            Actor *currentActor = (Actor*)get_item_at(collidingActors, i);
+            if(currentActor->entity.collide_event){
+                currentActor->entity.collide_event(currentActor, actor);
+            }
+            if(actor->entity.collide_event){
+                actor->entity.collide_event(actor, currentActor);
+            }
+        }
+
+        //Ativa o evento de movimento do próprio ator.
+        actor->position = position;
+        if(actor->entity.move_event){
+            actor->entity.move_event(actor);
+        }
+    return true;
     }
 }
 
@@ -77,6 +120,7 @@ bool destroy_actor(Actor *actor){
         actor->entity.destroy_event(actor);
     }
 
+    actor = NULL;
     free(actor);
     return true;
 }

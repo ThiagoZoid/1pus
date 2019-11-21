@@ -1,4 +1,5 @@
-#define playerEntity (Entity){ true, playerSprite, NULL, NULL, NULL, on_player_input }   //Entidade do Player.
+//Entidade do Player.
+#define playerEntity (Entity){ playerID, true, false, playerSprite, NULL, NULL, NULL, on_player_collide, on_player_input }
 
 typedef struct playerVars{
     bool alive;
@@ -23,6 +24,13 @@ void on_player_input(Actor *actor, SDL_Keycode key){
         set_actor_sprite(actor, (TextureData){ "res/player_r.png", 1, 1 });
         move_actor(actor, to_coordinate(actor->position.x + 1, actor->position.y));
         break;
+    }
+}
+
+//Quando o player colidir com a sombra, removê-la.
+void on_player_collide(Actor *actor, Actor *collidingActor){
+    if(collidingActor->entity.id == shadowID){
+        destroy_actor(collidingActor);
     }
 }
 

@@ -777,7 +777,7 @@
 
 1573883548 c:\users\thiag\onedrive\documentos\github\1pus\game\map.h
 
-1574343327 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
+1574371325 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
 	"player.h"
 	"hole.h"
 	"wumpus.h"
@@ -788,7 +788,7 @@
 
 1574339072 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\list.h
 
-1574366524 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\util.h
+1574366719 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\util.h
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
@@ -798,17 +798,17 @@
 
 1574324556 c:\users\thiag\onedrive\documentos\github\1pus\engine\tile\tile.h
 
-1574366493 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\actor.h
+1574369685 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\actor.h
 
 1574334925 c:\users\thiag\onedrive\documentos\github\1pus\engine\map\map.h
 
 1574193108 c:\users\thiag\onedrive\documentos\github\1pus\sdl\cache.h
 
-1574312867 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\controller.h
+1574369756 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\controller.h
 
-1574339286 c:\users\thiag\onedrive\documentos\github\1pus\game\player.h
+1574371351 c:\users\thiag\onedrive\documentos\github\1pus\game\player.h
 
-1574339430 c:\users\thiag\onedrive\documentos\github\1pus\game\wumpus.h
+1574371140 c:\users\thiag\onedrive\documentos\github\1pus\game\wumpus.h
 
-1574339740 c:\users\thiag\onedrive\documentos\github\1pus\game\hole.h
+1574371138 c:\users\thiag\onedrive\documentos\github\1pus\game\hole.h
 
