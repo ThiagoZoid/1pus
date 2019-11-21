@@ -35,7 +35,6 @@ List importantPositions;    //Lista onde as coordenadas importantes
                             //serão adicionadas para não haver repetição,
                             //por exemplo, o ouro nascer cima do Wumpus, etc.
 
-
 //Gera cada tile do mapa.
 void generate_tile(Tile *t, Coordinate position){
 

@@ -1,11 +1,17 @@
 //Entidade do Player.
-#define playerEntity (Entity){ playerID, true, false, playerSprite, NULL, NULL, NULL, on_player_collide, on_player_input }
+#define playerEntity (Entity){ playerID, true, true, playerSprite, NULL, on_player_destroy, on_player_move, on_player_collide, on_player_input }
 
 typedef struct playerVars{
-    bool alive;
+    int movements;
     int arrows;
 } PlayerVars;
 
+//Quando o player se mover, adiciona 1 aos movimentos.
+void on_player_move(Actor *actor){
+    ((PlayerVars*)actor->vars)->movements++;
+}
+
+//Quando o player receber algum evento de tecla.
 void on_player_input(Actor *actor, SDL_Keycode key){
     switch(key){
     case SDLK_w:
@@ -34,6 +40,12 @@ void on_player_collide(Actor *actor, Actor *collidingActor){
     }
 }
 
+//Quando o player for destruído.
+void on_player_destroy(Actor *actor){
+    if(is_actor_possessed(actor)) destroy_all_actors_with_entity_id(shadowID);
+}
+
+//Inicializa as variáveis padrão do player.
 PlayerVars *default_player_vars(){
     return (PlayerVars*)malloc(sizeof(PlayerVars));
 }

@@ -32,7 +32,6 @@ Texture* test;
 #include "engine/tile/tile.h"
 #include "engine/map/map.h"
 #include "engine/entity/actor.h"
-#include "engine/entity/controller.h"
 #include "game/game.h"
 
 //Se o usuário deseja sair do jogo.

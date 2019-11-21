@@ -1,5 +1,5 @@
 
-static Actor *possessedActor = NULL;
+Actor *possessedActor = NULL;
 
 //Possúi um ator.
 bool possess(Actor *actor){
@@ -14,8 +14,9 @@ void unpossess(){
 }
 
 //Verifica se o ator em questão é o possuído.
-bool is_actor_possessed(Actor actor){
-    return actor.id == possessedActor->id;
+bool is_actor_possessed(Actor *actor){
+    if(!actor || !possessedActor) return false;
+    return actor->id == possessedActor->id;
 }
 
 //Comunica uma tecla pressionada ao ator possúido.

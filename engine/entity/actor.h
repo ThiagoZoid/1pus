@@ -35,9 +35,16 @@ typedef struct actor{
 //Lista de atores.
 List actors;
 
+#include "controller.h"
+
 //Inicializa a lista de atores.
 void initialize_actors(){
     actors = empty_list();
+}
+
+//Compara dois atores.
+bool compare_actors(Actor *first, Actor *second){
+    return first->id == second->id;
 }
 
 //Spawna (criar) um ator no cenário.
@@ -68,6 +75,34 @@ List get_all_actors_at(Coordinate position){
     return actorsList;
 }
 
+//Destrói um ator.
+bool destroy_actor(Actor *actor){
+    if(!actor) return false;
+
+    remove_item_at(&actors, index_of(actors, actor, compare_actors));
+
+    if(actor->entity.destroy_event){
+        actor->entity.destroy_event(actor);
+    }
+
+    if(is_actor_possessed(actor)) unpossess();
+    //free(actor);
+    return true;
+}
+
+//Obtém todos os atores em um tile.
+void destroy_all_actors_with_entity_id(int id){
+    int i;
+    Actor *currentActor;
+    for(i = 0; i < actors.listSize; i++){
+        currentActor = (Actor*)get_item_at(actors, i);
+        if(currentActor->entity.id == id){
+            destroy_actor(currentActor);
+            i--;
+        }
+    }
+}
+
 //Move um ator.
 bool move_actor(Actor *actor, Coordinate position){
     if(!actor || position.x < 0 || position.y < 0 || position.x >= MAP_SIZE || position.y >= MAP_SIZE)
@@ -86,43 +121,28 @@ bool move_actor(Actor *actor, Coordinate position){
 
     if(canMove){
         //Ativa os eventos de colisão.
-        for(i = 0; i < collidingActors.listSize; i++){
-            Actor *currentActor = (Actor*)get_item_at(collidingActors, i);
-            if(currentActor->entity.collide_event){
-                currentActor->entity.collide_event(currentActor, actor);
-            }
-            if(actor->entity.collide_event){
-                actor->entity.collide_event(actor, currentActor);
+        if(actor){
+            for(i = 0; i < collidingActors.listSize; i++){
+                Actor *currentActor = (Actor*)get_item_at(collidingActors, i);
+                if(currentActor){
+                    if(currentActor->entity.collide_event){
+                        currentActor->entity.collide_event(currentActor, actor);
+                    }
+                    if(actor->entity.collide_event){
+                        actor->entity.collide_event(actor, currentActor);
+                    }
+                };
             }
         }
-
-        //Ativa o evento de movimento do próprio ator.
-        actor->position = position;
-        if(actor->entity.move_event){
-            actor->entity.move_event(actor);
+        if(actor){
+            //Ativa o evento de movimento do próprio ator.
+            actor->position = position;
+            if(actor->entity.move_event){
+                actor->entity.move_event(actor);
+            }
         }
-    return true;
     }
-}
-
-//Compara dois atores.
-bool compare_actors(Actor *first, Actor *second){
-    return first->id == second->id;
-}
-
-//Destrói um ator.
-bool destroy_actor(Actor *actor){
-    if(!actor) return false;
-
-    remove_item_at(&actors, (index_of(actors, actor, compare_actors)));
-
-    if(actor->entity.destroy_event){
-        actor->entity.destroy_event(actor);
-    }
-
-    actor = NULL;
-    free(actor);
-    return true;
+    return canMove;
 }
 
 //Obtém um ator através de seu ID.

@@ -393,7 +393,7 @@
 
 1573586789 c:\users\thiag\Área de trabalho\projetos\1pus\sdl\starter.h
 
-1574343258 source:c:\users\thiag\onedrive\documentos\github\1pus\main.c
+1574373913 source:c:\users\thiag\onedrive\documentos\github\1pus\main.c
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -410,7 +410,6 @@
 	"engine/tile/tile.h"
 	"engine/map/map.h"
 	"engine/entity/actor.h"
-	"engine/entity/controller.h"
 	"game/game.h"
 
 1540998544 c:\users\thiag\onedrive\documentos\github\1pus\obj\sdl2\include\sdl2\sdl.h
@@ -777,7 +776,7 @@
 
 1573883548 c:\users\thiag\onedrive\documentos\github\1pus\game\map.h
 
-1574371325 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
+1574378132 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
 	"player.h"
 	"hole.h"
 	"wumpus.h"
@@ -798,17 +797,18 @@
 
 1574324556 c:\users\thiag\onedrive\documentos\github\1pus\engine\tile\tile.h
 
-1574369685 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\actor.h
+1574377886 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\actor.h
+	"controller.h"
 
 1574334925 c:\users\thiag\onedrive\documentos\github\1pus\engine\map\map.h
 
 1574193108 c:\users\thiag\onedrive\documentos\github\1pus\sdl\cache.h
 
-1574369756 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\controller.h
+1574377881 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\controller.h
 
-1574371351 c:\users\thiag\onedrive\documentos\github\1pus\game\player.h
+1574378537 c:\users\thiag\onedrive\documentos\github\1pus\game\player.h
 
-1574371140 c:\users\thiag\onedrive\documentos\github\1pus\game\wumpus.h
+1574376501 c:\users\thiag\onedrive\documentos\github\1pus\game\wumpus.h
 
 1574371138 c:\users\thiag\onedrive\documentos\github\1pus\game\hole.h
 
