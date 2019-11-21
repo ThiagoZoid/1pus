@@ -1,4 +1,3 @@
-#define MAX_ACTORS 10
 #define ACTOR_SCALE 5
 
 typedef enum direction {

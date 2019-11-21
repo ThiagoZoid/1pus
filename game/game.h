@@ -4,7 +4,7 @@
 //Registro de texturas.
 #define tileSprite      (TextureData){ "res/tile.png", 1, 1 }
 #define tileHoleSprite  (TextureData){ "res/tile_hole.png", 1, 1 }
-#define playerSprite    (TextureData){ "res/player_f.png", 1, 1 }
+#define playerSprite    (TextureData){ "res/player_b.png", 1, 1 }
 #define wumpusSprite    (TextureData){ "res/wumpus.png", 2, 1500 }
 #define goldSprite      (TextureData){ "res/gold.png", 4, 400 }
 #define holeSprite      (TextureData){ "res/hole.png", 1, 1 }
@@ -65,7 +65,7 @@ void calculate_level(){
     List holePos = random_unique_coordinates(importantPositions, HOLE_COUNT);   //Coordenadas do ouro.
     append_lists(&importantPositions, holePos);                                 //Junção de listas.
 
-    player = spawn_actor(playerEntity, *playerPos, default_player_vars());  //Spawna o Player.
+    player = spawn_actor(playerEntity, *playerPos, default_player_vars());      //Spawna o Player.
 
     int i;
     for(i = 0; i < GOLD_COUNT; i++){
@@ -74,9 +74,9 @@ void calculate_level(){
     for(i = 0; i < HOLE_COUNT; i++){
         spawn_actor(holeEntity, *((Coordinate*)get_item_at(holePos, i)), NULL); //Spawna cada buraco.
     }
-    spawn_actor(wumpusEntity, *wumpusPos, NULL);                            //Spawna o Wumpus.
+    spawn_actor(wumpusEntity, *wumpusPos, NULL);                                //Spawna o Wumpus.
 
-    possess(player);    //Possúi o Player.
+    possess(player);                                                            //Possúi o Player.
 
 }
 

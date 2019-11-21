@@ -39,16 +39,19 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="engine/entity/actor.h" />
+		<Unit filename="engine/entity/controller.h" />
 		<Unit filename="engine/map/map.h" />
 		<Unit filename="engine/tile/tile.h" />
 		<Unit filename="engine/util/coordinate.h" />
 		<Unit filename="engine/util/list.h" />
 		<Unit filename="engine/util/util.h" />
 		<Unit filename="game/game.h" />
+		<Unit filename="game/hole.h" />
+		<Unit filename="game/player.h" />
+		<Unit filename="game/wumpus.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="sdl/cache.h" />
 		<Unit filename="sdl/imgcoordinate.h" />
 		<Unit filename="sdl/starter.h" />
 		<Unit filename="sdl/texture.h" />

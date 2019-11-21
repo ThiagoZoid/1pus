@@ -8,7 +8,7 @@
 
 //Dimensões da janela.
 #define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_HEIGHT 800
 
 #include "engine/util/list.h"
 #include "sdl/imgcoordinate.h"
@@ -25,7 +25,7 @@ Texture* background;
 Texture* test;
 
 //Tamanho do mapa.
-#define MAP_SIZE 5
+#define MAP_SIZE 10
 
 #include "engine/util/util.h"
 #include "engine/util/coordinate.h"
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
     if(init_graphics("Mundo de Wumpus", &gameWindow, &gameRenderer)){
 
         clear_graphics();
-        render_graphics(false);
+        render_graphics();
 
         begin_game();
 
@@ -63,7 +63,8 @@ int main(int argc, char *argv[]){
             render_map();
             render_actors();
 
-            render_graphics(true);
+            render_graphics();
+            update_sprites();
         }
         //Fecha os gráficos quando o laço acaba.
         close_graphics();

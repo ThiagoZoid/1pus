@@ -59,12 +59,11 @@ void clear_graphics(){
 }
 
 //Renderiza os gráficos.
-void render_graphics(bool updateSprites){
+void render_graphics(){
     //Atualiza a Tela.
     SDL_RenderPresent(*rendererRef);
     //Atualiza a Imagem.
     SDL_UpdateWindowSurface(*windowRef);
-    if(updateSprites) update_sprites();
 }
 
 //Desaloca os gráficos.

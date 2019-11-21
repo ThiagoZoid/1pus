@@ -393,7 +393,7 @@
 
 1573586789 c:\users\thiag\Área de trabalho\projetos\1pus\sdl\starter.h
 
-1574332534 source:c:\users\thiag\onedrive\documentos\github\1pus\main.c
+1574343258 source:c:\users\thiag\onedrive\documentos\github\1pus\main.c
 	<SDL.h>
 	<SDL_image.h>
 	<stdio.h>
@@ -765,7 +765,7 @@
 
 1574334787 c:\users\thiag\onedrive\documentos\github\1pus\sdl\texture.h
 
-1574334990 c:\users\thiag\onedrive\documentos\github\1pus\sdl\starter.h
+1574341153 c:\users\thiag\onedrive\documentos\github\1pus\sdl\starter.h
 
 1573409693 c:\users\thiag\onedrive\documentos\github\1pus\game\util\util.h
 
@@ -777,7 +777,7 @@
 
 1573883548 c:\users\thiag\onedrive\documentos\github\1pus\game\map.h
 
-1574340055 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
+1574343327 c:\users\thiag\onedrive\documentos\github\1pus\game\game.h
 	"player.h"
 	"hole.h"
 	"wumpus.h"
@@ -788,13 +788,17 @@
 
 1574339072 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\list.h
 
-1573409693 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\util.h
+1574366524 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\util.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<unistd.h>
 
 1574339158 c:\users\thiag\onedrive\documentos\github\1pus\engine\util\coordinate.h
 
 1574324556 c:\users\thiag\onedrive\documentos\github\1pus\engine\tile\tile.h
 
-1574339946 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\actor.h
+1574366493 c:\users\thiag\onedrive\documentos\github\1pus\engine\entity\actor.h
 
 1574334925 c:\users\thiag\onedrive\documentos\github\1pus\engine\map\map.h
 
