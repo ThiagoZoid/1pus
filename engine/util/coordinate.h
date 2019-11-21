@@ -16,7 +16,19 @@ static bool compare_coordinate_pointers(Coordinate *first, Coordinate *second){
 
 //Função da Lista customizada para coordenadas (para evitar tratativas de ponteiro).
 int index_of_coordinate(List itemList, Coordinate coordinate){
-    index_of(itemList, &coordinate, compare_coordinate_pointers);
+    return index_of(itemList, &coordinate, compare_coordinate_pointers);
+}
+
+//Cria uma coordenada.
+Coordinate to_coordinate(int x, int y){
+    return (Coordinate){ x, y };
+}
+
+//Aloca uma coordenada na memória e a inicializa.
+Coordinate *allocate_coordinate(Coordinate coordinate){
+    Coordinate *newCoordinate = (Coordinate*)malloc(sizeof(Coordinate));
+    *newCoordinate = coordinate;
+    return newCoordinate;
 }
 
 //Retorna verdadeiro se as coordenadas forem adjacentes (lados e diagonal).
@@ -36,6 +48,30 @@ bool adjacent_coordinate_cross(Coordinate first, Coordinate second){
     || (absolute(first.y - second.y) == 1 && first.x - second.x == 0);
 }
 
+//Retorna uma lista de coordenadas adjacentes paralelamente (formando um +).
+List adjacent_coordinates_cross(Coordinate coordinate){
+    List coordinateList = empty_list();
+
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x - 1, coordinate.y)));
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x + 1, coordinate.y)));
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x, coordinate.y - 1)));
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x, coordinate.y + 1)));
+
+    return coordinateList;
+}
+
+//Retorna uma lista de coordenadas adjacentes paralelamente (formando um X).
+List adjacent_coordinates_x(Coordinate coordinate){
+    List coordinateList = empty_list();
+
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x - 1, coordinate.y - 1)));
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x + 1, coordinate.y + 1)));
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x + 1, coordinate.y - 1)));
+    add_item(&coordinateList, allocate_coordinate(to_coordinate(coordinate.x - 1, coordinate.y + 1)));
+
+    return coordinateList;
+}
+
 //Exibe uma coordenada.
 void print_coordinate(Coordinate coordinate){
     printf("X: %i, Y: %i\n", coordinate.x, coordinate.y);
@@ -47,18 +83,6 @@ void print_coordinates(List coordinateList){
     for(i = 0; i < coordinateList.listSize; i++){
         print_coordinate(*(Coordinate*)get_item_at(coordinateList, i));
     }
-}
-
-//Cria uma coordenada.
-Coordinate to_coordinate(int x, int y){
-    return (Coordinate){ x, y };
-}
-
-//Aloca uma coordenada na memória e a inicializa.
-Coordinate *allocate_coordinate(Coordinate coordinate){
-    Coordinate *newCoordinate = (Coordinate*)malloc(sizeof(Coordinate));
-    *newCoordinate = coordinate;
-    return newCoordinate;
 }
 
 //Cria uma lista de coordenadas a partir de 1 coordenada.

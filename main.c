@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <string.h>
 
 //Dimensões da janela.
 #define SCREEN_WIDTH 800
@@ -16,7 +17,6 @@
 SDL_Window* gameWindow = NULL;
 SDL_Renderer* gameRenderer = NULL;
 
-#include "sdl/cache.h"
 #include "sdl/starter.h"
 #include "sdl/texture.h"
 
@@ -30,8 +30,9 @@ Texture* test;
 #include "engine/util/util.h"
 #include "engine/util/coordinate.h"
 #include "engine/tile/tile.h"
-#include "engine/entity/actor.h"
 #include "engine/map/map.h"
+#include "engine/entity/actor.h"
+#include "engine/entity/controller.h"
 #include "game/game.h"
 
 //Se o usuário deseja sair do jogo.
@@ -41,27 +42,28 @@ int main(int argc, char *argv[]){
     if(init_graphics("Mundo de Wumpus", &gameWindow, &gameRenderer)){
 
         clear_graphics();
-
-        Texture tex = load_texture((TextureData){"res/player_b.png", 1});
-
-        render_texture(&tex, (Transform){{SCREEN_WIDTH/2, SCREEN_HEIGHT/2}, 0, 5.0, false}, PIVOT_MID_CENTER, 1.0F);
-
-        render_graphics();
+        render_graphics(false);
 
         begin_game();
 
         SDL_Event e;
-        while(!quit)
-        {
-            //Executa Eventos na Fila
-            while(SDL_PollEvent(&e) != 0)
-            {
-                //Se o Usuário decide sair ou não
-                if(e.type == SDL_QUIT)
-                {
+        while(!quit) {
+            //Executa Eventos na Fila.
+            while(SDL_PollEvent(&e) != 0) {
+
+                //Se o Usuário decide sair ou não.
+                if(e.type == SDL_QUIT) {
                     quit = true;
+                } else if( e.type == SDL_KEYDOWN ) {
+                    press_key(e.key.keysym.sym);
                 }
             }
+            clear_graphics();
+
+            render_map();
+            render_actors();
+
+            render_graphics(true);
         }
         //Fecha os gráficos quando o laço acaba.
         close_graphics();

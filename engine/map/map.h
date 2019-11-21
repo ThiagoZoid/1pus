@@ -1,4 +1,4 @@
-#define TILE_SCALE 10
+#define TILE_SCALE 4
 
 //Mapa.
 Tile gameMap[MAP_SIZE][MAP_SIZE];
@@ -19,38 +19,24 @@ Tile* get_tile(Coordinate position){
 }
 
 //Renderiza o mapa.
-void render_map(Coordinate tileSize){
+void render_map(){
     //Posição inicial dos tiles.
-    Coord base = {(SCREEN_WIDTH / 2) - (MAP_SIZE / 2) * tileSize.x,
-                    (SCREEN_HEIGHT / 2) - (MAP_SIZE / 2) * tileSize.y};
+    Coord base = {(SCREEN_WIDTH / 2) - (GRID_SIZE * TILE_SCALE) * (MAP_SIZE / 2.0),
+                    (SCREEN_HEIGHT / 2) - (GRID_SIZE * TILE_SCALE) * (MAP_SIZE / 2.0)};
     int i, j;
     // Y
     for(i = 0; i < MAP_SIZE; i++){
         // X
         for(j = 0; j < MAP_SIZE; j++){
             Tile *currentTile = get_tile(to_coordinate(j, i));
-            //Verifica se a textura do tile já foi carregada.
-            Texture currentTexture = empty_texture();
-            currentTexture.data.path = currentTile->type->textureData.path;
-            int index = index_of(textureCache, &currentTexture, compare_textures);
-
-            //Caso não exista, carrega a textura do arquivo.
-            if(index < 0){
-                Texture *newTexture = malloc(sizeof(Texture));
-                *newTexture = load_texture(currentTile->type->textureData);
-                add_item(&textureCache, newTexture);
-                index = get_last_index(textureCache);
-            }
+            int index = get_texture(currentTile->spriteData);
 
             //Cálculo da posição do tile.
-            Coord tilePosition = {base.x + j * tileSize.x, base.y + i * tileSize.y};
+            Coord tilePosition = {base.x + j * GRID_SIZE * TILE_SCALE, base.y + i * GRID_SIZE * TILE_SCALE};
             Transform tileTransform = {tilePosition, 0, TILE_SCALE, false};
 
-            printf("%i", get_last_index(textureCache));
-
             //Renderiza a textura.
-            render_texture(get_item_at(textureCache, index), tileTransform, PIVOT_TOP_RIGHT, 1.0);
+            render_texture(((CacheTexture*)get_item_at(textureCache, index))->texture, tileTransform, PIVOT_TOP_LEFT, 1.0);
         }
     }
-
 }

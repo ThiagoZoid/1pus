@@ -21,7 +21,15 @@ bool is_list_empty(List itemList){
 void *get_item_at(List itemList, int index){
 
     return !is_list_empty(itemList) &&
-    index < itemList.listSize ? *(itemList.values + index) : NULL;
+            index < itemList.listSize ? *(itemList.values + index) : NULL;
+}
+
+//Obtém um item em um índice de uma lista.
+bool set_index(List *itemList, void *item, int index){
+    if(!itemList || !item || index < 0 || index >= itemList->listSize) return false;
+
+    *(itemList->values + index) = item;
+    return true;
 }
 
 //Obtém o último índice de uma lista.
@@ -32,14 +40,11 @@ int get_last_index(List itemList){
 //Checa se uma lista possúi uma item.
 int index_of(List itemList, void *item, bool (*compare_function)()){
     int i;
-    bool contains = false;
     for(i = 0; i < itemList.listSize; i++){
-        if(!contains){
-            void *currentItem = get_item_at(itemList, i);
-            contains = compare_function(currentItem, item);
-        } else break;
+        void *currentItem = get_item_at(itemList, i);
+        if(compare_function(currentItem, item)) return i;
     }
-    return contains ? i : -1;
+    return -1;
 }
 
 //Adiciona um item a uma lista.

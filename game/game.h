@@ -1,23 +1,30 @@
-#define HOLE_COUNT 2
+#define HOLE_COUNT MAP_SIZE / 2
 #define GOLD_COUNT 2
 
-//Registro de tipos de tile.
-TileType TILE_DEFAULT = { (TextureData){ "res/tile.png", 1 } };   //Tile padrão.
-TileType TILE_HOLE = { (TextureData){ "res/tile_hole.png", 1 } }; //Tile com buraco.
+//Registro de texturas.
+#define tileSprite      (TextureData){ "res/tile.png", 1, 1 }
+#define tileHoleSprite  (TextureData){ "res/tile_hole.png", 1, 1 }
+#define playerSprite    (TextureData){ "res/player_f.png", 1, 1 }
+#define wumpusSprite    (TextureData){ "res/wumpus.png", 2, 1500 }
+#define goldSprite      (TextureData){ "res/gold.png", 4, 400 }
+#define holeSprite      (TextureData){ "res/hole.png", 1, 1 }
+#define stenchSprite    (TextureData){ "res/stench.png", 2, 1000 }
+#define breezeSprite    (TextureData){ "res/breeze.png", 2, 1000 }
 
 //Registro de entidades.
-Entity playerEntity = { true, NULL, NULL };   //Propriedades do Player.
-Entity wumpusEntity = { false, NULL, NULL };  //Propriedades do Wumpus.
-Entity goldEntity = { false, NULL, NULL };    //Propriedades do Ouro.
-Entity stenchEntity = { false, NULL, NULL };  //Propriedades do Indicador de fedor.
-Entity breezeEntity = { false, NULL, NULL };  //Propriedades do Indicador de brisa.
+
+#define goldEntity      (Entity){ false, goldSprite, NULL, NULL, NULL, NULL }               //Propriedades do Ouro.
+#define stenchEntity    (Entity){ false, stenchSprite, NULL, NULL, NULL, NULL }             //Propriedades do Indicador de fedor.
+#define breezeEntity    (Entity){ false, breezeSprite, NULL, NULL, NULL, NULL }             //Propriedades do Indicador de brisa.
+
+#include "player.h"
+#include "hole.h"
+#include "wumpus.h"
+
 
 //Registro de atores (inicializados em tempo de execução).
-Actor* wumpus;              //Wumpus
-Actor* golds[GOLD_COUNT];   //Ouro (No jogo original há apenas 1 ouro,
-                            //mas para demonstração, esta versão conta
-                            //com 2 barras de ouro.
-Actor* player;              //Jogador.
+
+Actor *player;      //Referência ao Jogador.
 
 List importantPositions;    //Lista onde as coordenadas importantes
                             //serão adicionadas para não haver repetição,
@@ -27,18 +34,22 @@ List importantPositions;    //Lista onde as coordenadas importantes
 //Gera cada tile do mapa.
 void generate_tile(Tile *t, Coordinate position){
 
+    /*
     //Checa se não há nada importante no tile (Wumpus, player, etc...)
     if(index_of_coordinate(importantPositions, position) < 0){
-        if(adjacent_coordinate_cross(position, wumpus->position)){
 
-        }
     }
-    tile_set_type(t, &TILE_HOLE);
+    */
+
+    t->spriteData = tileSprite;
 }
 
 //Calcula os atributos básicos do nível.
 void calculate_level(){
     prepare_random_seed();
+
+    initialize_cache(); //Inicializa o cache;
+    initialize_actors(); //Inicializa atores;
 
     importantPositions = empty_list();  //Inicializa a lista de coordenadas importantes.
 
@@ -51,46 +62,28 @@ void calculate_level(){
     List goldPos = random_unique_coordinates(importantPositions, GOLD_COUNT);   //Coordenadas do ouro.
     append_lists(&importantPositions, goldPos);                                 //Junção de listas.
 
-    player = spawn_actor(playerEntity, *playerPos);  //Spawna o Player.
-    wumpus = spawn_actor(wumpusEntity, *wumpusPos);  //Spawna o Wumpus.
+    List holePos = random_unique_coordinates(importantPositions, HOLE_COUNT);   //Coordenadas do ouro.
+    append_lists(&importantPositions, holePos);                                 //Junção de listas.
+
+    player = spawn_actor(playerEntity, *playerPos, default_player_vars());  //Spawna o Player.
 
     int i;
     for(i = 0; i < GOLD_COUNT; i++){
-        golds[i] = spawn_actor(goldEntity, *((Coordinate*)get_item_at(goldPos, i))); //Spawna cada ouro.
+        spawn_actor(goldEntity, *((Coordinate*)get_item_at(goldPos, i)), NULL); //Spawna cada ouro.
     }
-
-}
-
-//Mostra o mapa no console.
-void render_map_test(){
-    int i, j;
-    for(i = 0; i < MAP_SIZE; i++){
-        for(j = 0; j < MAP_SIZE; j++){
-            char a;
-            if(index_of_coordinate(importantPositions, to_coordinate(j, i)) < 0){
-                if(compare_coordinates(player->position, to_coordinate(j, i))){
-                    a = 'P';
-                } else if(compare_coordinates(wumpus->position, to_coordinate(j, i))){
-                    a = 'W';
-                } else {
-                    a = 'G';
-                }
-            } else {
-                a = 'O';
-            }
-            printf("%c ", a);
-        }
-        printf("\n");
+    for(i = 0; i < HOLE_COUNT; i++){
+        spawn_actor(holeEntity, *((Coordinate*)get_item_at(holePos, i)), NULL); //Spawna cada buraco.
     }
+    spawn_actor(wumpusEntity, *wumpusPos, NULL);                            //Spawna o Wumpus.
+
+    possess(player);    //Possúi o Player.
 
 }
 
 //Função que é executada ao iniciar o jogo.
 void begin_game(){
-    initialize_actors();
     calculate_level();
+
     generate_map(&generate_tile);
-    //render_map_test();
-    render_map(to_coordinate(16, 16));
-    print_coordinates(importantPositions);
 }
+

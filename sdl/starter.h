@@ -9,9 +9,6 @@ bool init_graphics(char title[], SDL_Window **window, SDL_Renderer **renderer){
      windowRef = window;
      rendererRef = renderer;
 
-     //Inicializa o cache.
-     textureCache = empty_list();
-
      //Determina a qualidade de redimensionamento de imagens.
      //"0" -> equivale à técnica de redimensionamento "Nearest neighbour",
      //que é preferível para jogos pixelados. Para outros tipos de gráficos,
@@ -28,22 +25,22 @@ bool init_graphics(char title[], SDL_Window **window, SDL_Renderer **renderer){
                 printf("%s", SDL_GetError());
                 success = false;
          }else{
-             //Cria um renderizador
+             //Cria um renderizador.
              *rendererRef = SDL_CreateRenderer(*windowRef, -1, SDL_RENDERER_ACCELERATED);
              if(*rendererRef == NULL){
                 printf("%s", SDL_GetError());
              }else{
-				//Inicializa a cor de fundo do Renderizador
-				SDL_SetRenderDrawColor(*rendererRef, 0x3d, 0x3d, 0x3d, 0x00);
+				//Inicializa a cor de fundo do Renderizador.
+				SDL_SetRenderDrawColor(*rendererRef, 0x1d, 0x1d, 0x1d, 0x00);
 
                 int imgFlags;
-				//Inicializa o carregamento do formato PNG
+				//Inicializa o carregamento do formato PNG.
                 imgFlags = IMG_INIT_PNG;
 				if(!(IMG_Init(imgFlags) & imgFlags))
 				{
 					printf("%s", IMG_GetError());
 				}
-				//Inicializa o carregamento do formato JPG
+				//Inicializa o carregamento do formato JPG.
 				imgFlags = IMG_INIT_JPG;
 				if(!(IMG_Init(imgFlags) & imgFlags))
 				{
@@ -62,11 +59,12 @@ void clear_graphics(){
 }
 
 //Renderiza os gráficos.
-void render_graphics(){
-    // Atualiza a Tela
+void render_graphics(bool updateSprites){
+    //Atualiza a Tela.
     SDL_RenderPresent(*rendererRef);
-    // Atualiza a Imagem
+    //Atualiza a Imagem.
     SDL_UpdateWindowSurface(*windowRef);
+    if(updateSprites) update_sprites();
 }
 
 //Desaloca os gráficos.
