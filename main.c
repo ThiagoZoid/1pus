@@ -32,6 +32,10 @@ Texture* test;
 #include "engine/tile/tile.h"
 #include "engine/map/map.h"
 #include "engine/entity/actor.h"
+
+//Se o jogo acabou.
+bool gameEnded = false;
+
 #include "game/game.h"
 
 //Se o usuário deseja sair do jogo.
@@ -47,6 +51,10 @@ int main(int argc, char *argv[]){
 
         SDL_Event e;
         while(!quit) {
+            if(gameEnded) {
+                end_game();
+                break;
+            }
             //Executa Eventos na Fila.
             while(SDL_PollEvent(&e) != 0) {
 
