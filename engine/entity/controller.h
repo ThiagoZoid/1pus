@@ -1,4 +1,4 @@
-
+//Ator possuído.
 Actor *possessedActor = NULL;
 
 //Possúi um ator.

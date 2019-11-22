@@ -1,6 +1,7 @@
 //Entidade do Player.
 #define playerEntity (Entity){ playerID, true, true, playerSprite, NULL, on_player_destroy, on_player_move, on_player_collide, on_player_input }
 
+//Variáveis do jogador (movimentos, moedas adquiridas e flechas).
 typedef struct playerVars{
     int movements;
     int golds;

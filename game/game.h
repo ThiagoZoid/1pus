@@ -29,6 +29,8 @@
 int golds = 0;      //Informações do player armazenadas quando o jogo
 int movements = 0;  //acaba (para serem mostradas).
 
+//Entidades mais significantes (com comportamentos e
+//variáveis únicas) têm seu próprio header, para organização.
 #include "gold.h"
 #include "player.h"
 #include "hole.h"

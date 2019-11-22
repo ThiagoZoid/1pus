@@ -1,11 +1,5 @@
+//Tamanho de um ator na tela.
 #define ACTOR_SCALE 5
-
-typedef enum direction {
-    FRONT,
-    BACK,
-    RIGHT,
-    LEFT
-} Direction;
 
 typedef struct entity Entity;
 typedef struct actor Actor;

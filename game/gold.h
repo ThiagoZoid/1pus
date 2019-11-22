@@ -1,6 +1,8 @@
 //Entidade do ouro.
-#define goldEntity      (Entity){ goldID, false, false, goldSprite, NULL, NULL, NULL, NULL, NULL }
+#define goldEntity (Entity){ goldID, false, false, goldSprite, NULL, NULL, NULL, NULL, NULL }
 
+//Variáveis do ouro (marca se o ouro
+//já foi pego e impossibilida o jogador de repetir o processo).
 typedef struct goldVars{
     bool taken;
 } GoldVars;

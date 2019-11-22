@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+//Mensagem
 #if defined(WIN32) || defined(WINDOWS)
 #include <windows.h>
 void MsgBox(char *s, char *t){

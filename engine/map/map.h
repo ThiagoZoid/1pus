@@ -1,3 +1,4 @@
+//Tamanho de um tile na tela.
 #define TILE_SCALE 4
 
 //Mapa.
