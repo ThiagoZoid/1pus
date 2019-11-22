@@ -26,8 +26,10 @@
 #define breezeEntity    (Entity){ breezeID, false, false, breezeSprite, NULL, NULL, NULL, NULL, NULL }
 #define shadowEntity    (Entity){ shadowID, false, false, shadowSprite, NULL, NULL, NULL, NULL, NULL }
 
-int golds = 0;      //Informações do player armazenadas quando o jogo
-int movements = 0;  //acaba (para serem mostradas).
+int golds = 0;          //Informações do player armazenadas quando o jogo
+int movements = 0;      //acaba (para serem mostradas).
+
+bool msgShown = false;  //Se a mensagem de pontuação já foi mostrada.
 
 //Entidades mais significantes (com comportamentos e
 //variáveis únicas) têm seu próprio header, para organização.
@@ -93,15 +95,16 @@ void calculate_level(){
 
 //Finaliza o jogo e mostra a pontuação.
 void end_game(){
-    char msg[64];
-    sprintf(msg, "Movimentos: %i, Moedas: %i/%i", movements, golds, GOLD_COUNT);
-    MsgBox(msg, "Fim de jogo!");
+    if(!msgShown){
+        char msg[64];
+        sprintf(msg, "Movimentos: %i, Moedas: %i/%i", movements, golds, GOLD_COUNT);
+        MsgBox(msg, "Fim de jogo!");
+        msgShown = true;
+    }
 }
 
 //Função que é executada ao iniciar o jogo.
 void begin_game(){
     calculate_level();
-
     generate_map(&generate_tile);
 }
-
