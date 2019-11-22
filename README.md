@@ -19,6 +19,7 @@ Por fim, inclua os seguintes diretórios no compilador:
 Pronto! Deve ser tudo o que é preciso para rodar a engine na sua IDE preferida.
 
 Download do Code::Blocks: http://www.codeblocks.org/downloads
+
 Download do Code::Blocks portátil (não requer instalação nem direitos de administrador): http://codeblocks.codecutter.org/
 
 ## Editor de imagens recomendado
@@ -26,4 +27,5 @@ O **Paint.NET** é o editor de imagens recomendado para criar sprites pixeladas,
 exemplo. Lembre-se de criar sprites pixeladas no seu tamanho real e redimensioná-las dentro da engine.
 
 Download do Paint.NET: https://www.getpaint.net/download.html
+
 Download do Paint.NET portátil (não requer instalação nem direitos de administrador): https://www.portablefreeware.com/index.php?id=2904
