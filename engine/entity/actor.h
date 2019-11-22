@@ -1,20 +1,18 @@
 //Tamanho de um ator na tela.
 #define ACTOR_SCALE 5
 
-typedef struct entity Entity;
-typedef struct actor Actor;
-
+struct actor;
 //Estrutura de uma entidade.
 typedef struct entity{
     int id;
     bool controllable;
     bool blockable;
     TextureData spriteData;
-    void (*spawn_event)(Actor*);
-    void (*destroy_event)(Actor*);
-    void (*move_event)(Actor*);
-    void (*collide_event)(Actor*, Actor*);
-    void (*input_event)(Actor*, SDL_Keycode);
+    void (*spawn_event)(struct actor;*);
+    void (*destroy_event)(struct actor;*);
+    void (*move_event)(struct actor;*);
+    void (*collide_event)(struct actor;*, struct actor;*);
+    void (*input_event)(struct actor;*, SDL_Keycode);
 } Entity;
 
 //Estrutura de um ator.
@@ -41,7 +39,7 @@ bool compare_actors(Actor *first, Actor *second){
     return first->id == second->id;
 }
 
-//Spawna (criar) um ator no cen·rio.
+//Spawna (criar) um ator no cen√°rio.
 Actor *spawn_actor(Entity entity, Coordinate position, void *vars){
     if(position.x < 0 || position.y < 0 || position.x >= MAP_SIZE || position.y >= MAP_SIZE) return NULL;
 
@@ -56,7 +54,7 @@ Actor *spawn_actor(Entity entity, Coordinate position, void *vars){
     return actor;
 }
 
-//ObtÈm todos os atores em um tile.
+//Obt√©m todos os atores em um tile.
 List get_all_actors_at(Coordinate position){
     List actorsList = empty_list();
     int i;
@@ -69,7 +67,7 @@ List get_all_actors_at(Coordinate position){
     return actorsList;
 }
 
-//DestrÛi um ator.
+//Destr√≥i um ator.
 bool destroy_actor(Actor *actor){
     if(!actor) return false;
 
@@ -84,7 +82,7 @@ bool destroy_actor(Actor *actor){
     return true;
 }
 
-//ObtÈm todos os atores em um tile.
+//Obt√©m todos os atores em um tile.
 void destroy_all_actors_with_entity_id(int id){
     int i;
     Actor *currentActor;
@@ -102,7 +100,7 @@ bool move_actor(Actor *actor, Coordinate position){
     if(!actor || position.x < 0 || position.y < 0 || position.x >= MAP_SIZE || position.y >= MAP_SIZE)
         return false;
 
-    //Verifica se algum dos atores no tile alvo È bloque·vel.
+    //Verifica se algum dos atores no tile alvo √© bloque√°vel.
     List collidingActors = get_all_actors_at(position);
     int i;
     bool canMove = true;
@@ -114,7 +112,7 @@ bool move_actor(Actor *actor, Coordinate position){
     }
 
     if(canMove){
-        //Ativa os eventos de colis„o.
+        //Ativa os eventos de colis√£o.
         if(actor){
             for(i = 0; i < collidingActors.listSize; i++){
                 Actor *currentActor = (Actor*)get_item_at(collidingActors, i);
@@ -129,7 +127,7 @@ bool move_actor(Actor *actor, Coordinate position){
             }
         }
         if(actor){
-            //Ativa o evento de movimento do prÛprio ator.
+            //Ativa o evento de movimento do pr√≥prio ator.
             actor->position = position;
             if(actor->entity.move_event){
                 actor->entity.move_event(actor);
@@ -139,7 +137,7 @@ bool move_actor(Actor *actor, Coordinate position){
     return canMove;
 }
 
-//ObtÈm um ator atravÈs de seu ID.
+//Obt√©m um ator atrav√©s de seu ID.
 Actor *get_actor_by_id(int id){
     if(id < 0) return NULL;
 
@@ -167,10 +165,10 @@ bool set_actor_sprite(Actor *actor, TextureData data){
 bool render_actor(Actor *actor){
     if(!actor || !actor->sprite) return false;
 
-    //PosiÁ„o do tile (0, 0).
+    //Posi√ß√£o do tile (0, 0).
     Coord base = {(SCREEN_WIDTH / 2) - (GRID_SIZE * TILE_SCALE) * (MAP_SIZE / 2.0),
                     (SCREEN_HEIGHT / 2) - (GRID_SIZE * TILE_SCALE) * (MAP_SIZE / 2.0)};
-    //C·lculo da posiÁ„o do tile.
+    //C√°lculo da posi√ß√£o do tile.
     Coord actorPosition = {base.x + actor->position.x * GRID_SIZE * TILE_SCALE + GRID_SIZE * TILE_SCALE / 2,
                             base.y + actor->position.y * GRID_SIZE * TILE_SCALE + GRID_SIZE * TILE_SCALE / 2};
     Transform actorTransform = {actorPosition, 0, ACTOR_SCALE, false};
