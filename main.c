@@ -53,7 +53,6 @@ int main(int argc, char *argv[]){
         while(!quit) {
             if(gameEnded) {
                 end_game();
-                break;
             }
             //Executa Eventos na Fila.
             while(SDL_PollEvent(&e) != 0) {
