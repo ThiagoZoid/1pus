@@ -17,3 +17,7 @@ Por fim, inclua os seguintes diretórios no compilador:
 - obj/sdl2_image/include/SDL2
 
 Pronto! Deve ser tudo o que é preciso para rodar a engine na sua IDE preferida.
+
+## Editor de imagens recomendado
+O **Paint.NET** é o editor de imagens recomendado para criar sprites pixeladas, no estilo do jogo
+exemplo. Lembre-se de criar sprites pixeladas no seu tamanho real e redimensioná-las dentro da engine.
