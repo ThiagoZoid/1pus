@@ -94,7 +94,7 @@ void calculate_level(){
 //Finaliza o jogo e mostra a pontuação.
 void end_game(){
     char msg[64];
-    sprintf(&msg, "Movimentos: %i, Moedas: %i/%i", movements, golds, GOLD_COUNT);
+    sprintf(msg, "Movimentos: %i, Moedas: %i/%i", movements, golds, GOLD_COUNT);
     MsgBox(msg, "Fim de jogo!");
 }
 
