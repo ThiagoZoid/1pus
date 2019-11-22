@@ -11,7 +11,8 @@ Na sua IDE, inclua os argumentos no linker: "-lmingw32 -lSDL2main -lSDL2 -lSDL2_
 Também inclua os seguintes diretórios de pesquisa no linker:
 - obj/sdl2/lib
 - obj/sdl2_image/lib
-<br>Por fim, inclua os seguintes diretórios no compilador:
+
+Por fim, inclua os seguintes diretórios no compilador:
 - obj/sdl2/include/SDL2
 - obj/sdl2_image/include/SDL2
 
