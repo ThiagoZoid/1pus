@@ -6,9 +6,9 @@
 #include <time.h>
 #include <string.h>
 
-//Dimensıes da janela.
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 800
+//Dimens√µes da janela.
+#define SCREEN_WIDTH 500
+#define SCREEN_HEIGHT 500
 
 #include "engine/util/list.h"
 #include "sdl/imgcoordinate.h"
@@ -25,7 +25,7 @@ Texture* background;
 Texture* test;
 
 //Tamanho do mapa.
-#define MAP_SIZE 10
+#define MAP_SIZE 6
 
 #include "engine/util/util.h"
 #include "engine/util/coordinate.h"
@@ -38,7 +38,7 @@ bool gameEnded = false;
 
 #include "game/game.h"
 
-//Se o usu·rio deseja sair do jogo.
+//Se o usu√°rio deseja sair do jogo.
 bool quit = false;
 
 int main(int argc, char *argv[]){
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
             //Executa Eventos na Fila.
             while(SDL_PollEvent(&e) != 0) {
 
-                //Se o Usu·rio decide sair ou n„o.
+                //Se o Usu√°rio decide sair ou n√£o.
                 if(e.type == SDL_QUIT) {
                     quit = true;
                 } else if( e.type == SDL_KEYDOWN ) {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
             render_graphics();
             update_sprites();
         }
-        //Fecha os gr·ficos quando o laÁo acaba.
+        //Fecha os gr√°ficos quando o la√ßo acaba.
         close_graphics();
     }
     return 0;
