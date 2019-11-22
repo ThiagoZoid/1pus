@@ -8,11 +8,11 @@ typedef struct entity{
     bool controllable;
     bool blockable;
     TextureData spriteData;
-    void (*spawn_event)(struct actor;*);
-    void (*destroy_event)(struct actor;*);
-    void (*move_event)(struct actor;*);
-    void (*collide_event)(struct actor;*, struct actor;*);
-    void (*input_event)(struct actor;*, SDL_Keycode);
+    void (*spawn_event)(struct actor*);
+    void (*destroy_event)(struct actor*);
+    void (*move_event)(struct actor*);
+    void (*collide_event)(struct actor*, struct actor*);
+    void (*input_event)(struct actor*, SDL_Keycode);
 } Entity;
 
 //Estrutura de um ator.
